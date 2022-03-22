@@ -1,6 +1,5 @@
-import math
 import numpy as np
-from numpy import sqrt
+from math import sqrt
 
 
 class Calculator:
@@ -17,9 +16,7 @@ class Calculator:
         return flattened_output
 
     def __initialize_output_matrix(self):
-        output_matrix = np.zeros((self.x_range, self.y_range, self.z_range))
-
-        return output_matrix
+        return np.zeros((self.x_range, self.y_range, self.z_range))
 
     def __calculate_outputs(self, output_matrix, input_points):
         for x in range(self.x_range):
