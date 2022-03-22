@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from calculator import Calculator
 from input_points_generator import InputPointGenerator
 
-X_RANGE = 30
-Y_RANGE = 30
-Z_RANGE = 30
+X_RANGE = 100
+Y_RANGE = 100
+Z_RANGE = 100
 
 
 if __name__ == "__main__":

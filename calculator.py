@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 
 class Calculator:
@@ -15,16 +16,7 @@ class Calculator:
         return flattened_output
 
     def __initialize_output_matrix(self):
-        output_matrix = []
-
-        for _ in range(self.x_range):
-            x_array = []
-            for _ in range(self.y_range):
-                y_array = []
-                for _ in range(self.z_range):
-                    y_array.append(0)
-                x_array.append(y_array)
-            output_matrix.append(x_array)
+        output_matrix = np.zeros((self.x_range, self.y_range, self.z_range))
 
         return output_matrix
 
