@@ -9,8 +9,9 @@ class Calculator:
         self.z_range = z_range
 
     def get_output(self, input_points):
+        input_points_np = np.array(input_points)
         output_matrix = self.__initialize_output_matrix()
-        output_matrix = self.__calculate_outputs(output_matrix, input_points)
+        output_matrix = self.__calculate_outputs(output_matrix, input_points_np)
         flattened_output = self.__flatten(output_matrix)
 
         return flattened_output

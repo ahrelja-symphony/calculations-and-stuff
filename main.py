@@ -4,6 +4,7 @@ import timeit
 import numpy as np
 
 import matplotlib.pyplot as plt
+from line_profiler import LineProfiler
 
 from calculator import Calculator
 from input_points_generator import InputPointGenerator
