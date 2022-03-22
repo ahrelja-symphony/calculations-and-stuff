@@ -1,4 +1,4 @@
-import math
+from numpy import sqrt
 
 
 class Calculator:
@@ -29,13 +29,12 @@ class Calculator:
         return output_matrix
 
     def __calculate_outputs(self, output_matrix, input_points):
-        sqrt = math.sqrt
         for x in range(self.x_range):
             for y in range(self.y_range):
                 for z in range(self.z_range):
                     current_point = (x, y, z)
                     output_matrix[x][y][z] = self.__calculate_value(
-                        current_point=current_point, input_points=input_points, sqrt=sqrt
+                        current_point=current_point, input_points=input_points
                     )
 
         return output_matrix
@@ -60,7 +59,7 @@ class Calculator:
         return flattened_output
 
     @staticmethod
-    def __calculate_value(current_point, input_points, sqrt):
+    def __calculate_value(current_point, input_points):
         distances = []
 
         for input_point in input_points:
