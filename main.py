@@ -1,32 +1,26 @@
 import time
-import timeit
-
 import numpy as np
 
 import matplotlib.pyplot as plt
-from line_profiler import LineProfiler
 
 from calculator import Calculator
 from input_points_generator import InputPointGenerator
 
-X_RANGE = 100
-Y_RANGE = 100
-Z_RANGE = 100
+X_RANGE = 400
+Y_RANGE = 400
+Z_RANGE = 400
 
-def calculate():
+
+if __name__ == "__main__":
+    t = time.time()
     input_points = np.array(
         [val for val in InputPointGenerator.get_diagonal(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)])
     calculator = Calculator(x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
     output = calculator.get_output(input_points=input_points)
-    # print(output)
-
-
-
-if __name__ == "__main__":
-    calculate()
+    print(time.time() - t)
     # timeit.timeit("calculate()", setup="from __main__ import calculate", number=1)
-    # data = np.array(output)
-    # plt.imshow(data, cmap='autumn', interpolation='nearest')
-    #
-    # plt.title("2-D Heat Map")
-    # plt.show()
+    data = np.array(output)
+    plt.imshow(data, cmap='autumn', interpolation='nearest')
+
+    plt.title("2-D Heat Map")
+    plt.show()
