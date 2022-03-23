@@ -14,7 +14,7 @@ Z_RANGE = 400
 if __name__ == "__main__":
     t = time.time()
     input_points = np.array(
-        [val for val in InputPointGenerator.get_diagonal(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)])
+        [val for val in InputPointGenerator.get_diagonal(step=40, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)])
     calculator = Calculator(x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
     output = calculator.get_output(input_points=input_points)
     print(time.time() - t)
