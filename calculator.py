@@ -2,16 +2,22 @@ from numpy import sqrt
 
 
 class Calculator:
-    def __init__(self, x_range, y_range, z_range):
+    def __init__(self, x_range, y_range, z_range, propagation_factor, intensity_factor):
         self.x_range = x_range
         self.y_range = y_range
         self.z_range = z_range
+        self.propagation_factor = propagation_factor
+        self.intensity_factor = intensity_factor
 
     def get_output(self, input_points):
         output_matrix = self.__initialize_output_matrix()
         output_matrix = self.__calculate_outputs(output_matrix, input_points)
 
-        return self.__flatten_by_x(output_matrix), self.__flatten_by_y(output_matrix), self.__flatten_by_z(output_matrix)
+        return (
+            self.__flatten_by_x(output_matrix),
+            self.__flatten_by_y(output_matrix),
+            self.__flatten_by_z(output_matrix),
+        )
 
     def __initialize_output_matrix(self):
         output_matrix = []
@@ -33,7 +39,10 @@ class Calculator:
                 for z in range(self.z_range):
                     current_point = (x, y, z)
                     output_matrix[x][y][z] = self.__calculate_value(
-                        current_point=current_point, input_points=input_points
+                        current_point=current_point,
+                        input_points=input_points,
+                        propagation_factor=self.propagation_factor,
+                        intensity_factor=self.intensity_factor,
                     )
 
         return output_matrix
@@ -90,13 +99,17 @@ class Calculator:
         return flattened_output
 
     @classmethod
-    def __calculate_value(cls, current_point, input_points):
+    def __calculate_value(cls, current_point, input_points, propagation_factor, intensity_factor):
         total_contribution = 0
 
         for input_point in input_points:
             for h in range(input_point.z - input_point.height // 2, input_point.z + input_point.height // 2):
-                distance = cls.__calculate_distance(current_point=current_point, input_point=(input_point.x, input_point.y, h))
-                total_contribution += cls.__calculate_contribution(distance=distance)
+                distance = cls.__calculate_distance(
+                    current_point=current_point, input_point=(input_point.x, input_point.y, h)
+                )
+                total_contribution += cls.__calculate_contribution(
+                    distance=distance, propagation_factor=propagation_factor, intensity_factor=intensity_factor
+                )
 
         return total_contribution
 
@@ -109,5 +122,5 @@ class Calculator:
         )
 
     @staticmethod
-    def __calculate_contribution(distance):
-        return 10000 / ((1 + distance) ** 1.7)
+    def __calculate_contribution(distance, propagation_factor, intensity_factor):
+        return intensity_factor / ((1 + distance) ** propagation_factor)
