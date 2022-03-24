@@ -11,7 +11,7 @@ def calculate_distance(p1, p2):
 
 @njit
 def calculate_contribution(distance):
-    return 1 / ((1 + distance) ** 2)
+    return 1 / ((1 + distance) ** 2.4)
 
 
 @njit
