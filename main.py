@@ -8,9 +8,9 @@ from mpl_toolkits.axes_grid1 import AxesGrid
 from calculator import Calculator
 from input_points_generator import HolesGenerator
 
-X_RANGE = 20
-Y_RANGE = 20
-Z_RANGE = 20
+X_RANGE = 50
+Y_RANGE = 50
+Z_RANGE = 50
 
 def plot_input(input_points):
     fig = plt.figure()
@@ -59,7 +59,7 @@ def plot_ouputs(output_x, output_y, output_z):
 
 
 if __name__ == "__main__":
-    input_points = HolesGenerator.get_surface_diagonal_cross(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, height=8)
+    input_points = HolesGenerator.get_surface_diagonal_cross(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, height=2)
     calculator = Calculator(x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
 
     t = time.time()

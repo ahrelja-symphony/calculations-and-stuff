@@ -11,20 +11,19 @@ def calculate_distance(p1, p2):
 
 @njit
 def calculate_contribution(distance):
-    return 1 / ((1 + distance) ** 4)
+    return 1 / ((1 + distance) ** 2)
 
 
 @njit
 def calculate_value(current_point, input_points):
-    max_distance = 0
+    total_contribution = 0
 
     for input_point in input_points:
         distance = calculate_distance(p1=current_point, p2=input_point)
+        contribution = calculate_contribution(distance=distance)
+        total_contribution += contribution
 
-        if distance > max_distance:
-            max_distance = distance
-
-    return calculate_contribution(distance=max_distance)
+    return total_contribution
 
 
 class Calculator:
@@ -67,12 +66,12 @@ class Calculator:
         for _ in range(matrix.shape[0]):
             y_list = []
             for _ in range(matrix.shape[2]):
-                y_list.append(0)
+                y_list.append(0.0)
             flattened_output.append(y_list)
 
         for y in prange(matrix.shape[1]):
             for z in prange(matrix.shape[2]):
-                flattened_value = 0
+                flattened_value = 0.0
                 for x in range(matrix.shape[0]):
                     flattened_value += matrix[x][y][z]
 
@@ -88,12 +87,12 @@ class Calculator:
         for _ in range(matrix.shape[0]):
             y_list = []
             for _ in range(matrix.shape[2]):
-                y_list.append(0)
+                y_list.append(0.0)
             flattened_output.append(y_list)
 
         for x in prange(matrix.shape[0]):
             for z in prange(matrix.shape[2]):
-                flattened_value = 0
+                flattened_value = 0.0
                 for y in range(matrix.shape[1]):
                     flattened_value += matrix[x][y][z]
 
@@ -109,12 +108,12 @@ class Calculator:
         for _ in range(matrix.shape[0]):
             y_list = []
             for _ in range(matrix.shape[1]):
-                y_list.append(0)
+                y_list.append(0.0)
             flattened_output.append(y_list)
 
         for x in prange(matrix.shape[0]):
             for y in prange(matrix.shape[1]):
-                flattened_value = 0
+                flattened_value = 0.0
                 for z in range(matrix.shape[2]):
                     flattened_value += matrix[x][y][z]
 
