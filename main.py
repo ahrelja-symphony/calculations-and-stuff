@@ -47,8 +47,10 @@ def plot_ouputs(output_x, output_y, output_z):
                     cbar_mode="single",
                     )
 
+    max_val = max((val.max() for val in vals))
+
     for val, ax in zip(vals, grid):
-        im = ax.imshow(val, vmin=0, vmax=1, cmap="hot")
+        im = ax.imshow(val, vmin=0, vmax=max_val, cmap="hot")
 
     grid.cbar_axes[0].colorbar(im)
 

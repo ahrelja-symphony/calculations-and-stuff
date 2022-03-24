@@ -11,17 +11,18 @@ def calculate_distance(p1, p2):
 
 @njit
 def calculate_contribution(distance):
-    return 1 / ((1 + distance) ** 2.4)
+    return 10000 / ((1 + distance) ** 2.4)
 
 
 @njit
 def calculate_value(current_point, input_points):
-    total_contribution = 0
+    total_contribution = 0.0
 
     for input_point in input_points:
-        distance = calculate_distance(p1=current_point, p2=input_point)
-        contribution = calculate_contribution(distance=distance)
-        total_contribution += contribution
+        for h in range(input_point[2] - input_point[3] // 2, input_point[2] + input_point[3] // 2):
+            distance = calculate_distance(p1=current_point, p2=(input_point[0], input_point[1], h))
+            contribution = calculate_contribution(distance=distance)
+            total_contribution += contribution
 
     return total_contribution
 
