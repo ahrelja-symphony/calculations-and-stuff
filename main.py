@@ -62,7 +62,7 @@ def plot_ouputs(output_x, output_y, output_z):
 
 if __name__ == "__main__":
     input_points = HolesGenerator.get_surface_row(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, height=10)
-    calculator = Calculator(x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
+    calculator = Calculator(x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, propagation_factor=2.4, intensity_factor=10000)
 
     t = time.time()
 
