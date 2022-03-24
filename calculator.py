@@ -89,19 +89,25 @@ class Calculator:
 
         return flattened_output
 
-    @staticmethod
-    def __calculate_value(current_point, input_points):
-        distances = []
+    @classmethod
+    def __calculate_value(cls, current_point, input_points):
+        total_contribution = 0
 
         for input_point in input_points:
-            distance = sqrt(
-                (current_point[0] - input_point.x) ** 2
-                + (current_point[1] - input_point.y) ** 2
-                + (current_point[2] - input_point.z) ** 2
-            )
+            for h in range(input_point.z - input_point.height // 2, input_point.z + input_point.height // 2):
+                distance = cls.__calculate_distance(current_point=current_point, input_point=(input_point.x, input_point.y, h))
+                total_contribution += cls.__calculate_contribution(distance=distance)
 
-            distances.append(distance)
+        return total_contribution
 
-        maximum_distance = max(distances)
+    @staticmethod
+    def __calculate_distance(current_point, input_point):
+        return sqrt(
+            (current_point[0] - input_point[0]) ** 2
+            + (current_point[1] - input_point[1]) ** 2
+            + (current_point[2] - input_point[2]) ** 2
+        )
 
-        return 10000 / ((1 + maximum_distance) ** 4)
+    @staticmethod
+    def __calculate_contribution(distance):
+        return 10000 / ((1 + distance) ** 1.7)
