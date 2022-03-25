@@ -9,9 +9,9 @@ class Calculator:
         self.propagation_factor = propagation_factor
         self.intensity_factor = intensity_factor
 
-    def get_output(self, input_points):
+    def get_output(self, holes):
         output_matrix = self.__initialize_output_matrix()
-        output_matrix = self.__calculate_outputs(output_matrix, input_points)
+        output_matrix = self.__calculate_outputs(output_matrix, holes)
 
         return (
             self.__flatten_by_x(output_matrix),
@@ -33,14 +33,14 @@ class Calculator:
 
         return output_matrix
 
-    def __calculate_outputs(self, output_matrix, input_points):
+    def __calculate_outputs(self, output_matrix, holes):
         for x in range(self.x_range):
             for y in range(self.y_range):
                 for z in range(self.z_range):
                     current_point = (x, y, z)
                     output_matrix[x][y][z] = self.__calculate_value(
                         current_point=current_point,
-                        input_points=input_points,
+                        holes=holes,
                         propagation_factor=self.propagation_factor,
                         intensity_factor=self.intensity_factor,
                     )
@@ -99,13 +99,13 @@ class Calculator:
         return flattened_output
 
     @classmethod
-    def __calculate_value(cls, current_point, input_points, propagation_factor, intensity_factor):
+    def __calculate_value(cls, current_point, holes, propagation_factor, intensity_factor):
         total_contribution = 0
 
-        for input_point in input_points:
-            for h in range(input_point.z - input_point.height // 2, input_point.z + input_point.height // 2):
+        for holes in holes:
+            for h in range(holes.z - holes.height // 2, holes.z + holes.height // 2):
                 distance = cls.__calculate_distance(
-                    current_point=current_point, input_point=(input_point.x, input_point.y, h)
+                    current_point=current_point, input_point=(holes.x, holes.y, h)
                 )
                 total_contribution += cls.__calculate_contribution(
                     distance=distance, propagation_factor=propagation_factor, intensity_factor=intensity_factor
