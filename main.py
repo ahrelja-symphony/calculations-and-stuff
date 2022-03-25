@@ -4,16 +4,18 @@ from calculator import Calculator
 from input_points_generator import HolesGenerator
 from plotting_helper import PlottingHelper
 
-X_RANGE = 50
-Y_RANGE = 50
-Z_RANGE = 50
-HEIGHT = 7
-PROPAGATION_FACTOR = 2.4
-INTENSITY_FACTOR = 10000
+X_RANGE = 100
+Y_RANGE = 100
+Z_RANGE = 100
+HEIGHT = 10
+PROPAGATION_FACTOR = 1.7
+INTENSITY_FACTOR = 10000.0
 
 
 if __name__ == "__main__":
-    input_points = HolesGenerator.get_surface_row(step=5, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, height=10)
+    input_points = HolesGenerator.get_surface_row(
+        step=20, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE, height=HEIGHT
+    )
     calculator = Calculator(
         x_range=X_RANGE,
         y_range=Y_RANGE,

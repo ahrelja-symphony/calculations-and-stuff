@@ -1,32 +1,8 @@
-from math import sqrt
 
 import numpy as np
-from numba import njit, jit, prange
+from numba import jit, prange
 
-
-@njit
-def calculate_distance(p1, p2):
-    return sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2 + (p1[2] - p2[2]) ** 2)
-
-
-@njit
-def calculate_contribution(distance, propagation_factor, intensity_factor):
-    return intensity_factor / ((1 + distance) ** propagation_factor)
-
-
-@njit
-def calculate_value(current_point, input_points, propagation_factor, intensity_factor):
-    total_contribution = 0.0
-
-    for input_point in input_points:
-        for h in range(input_point[2] - input_point[3] // 2, input_point[2] + input_point[3] // 2):
-            distance = calculate_distance(p1=current_point, p2=(input_point[0], input_point[1], h))
-            contribution = calculate_contribution(
-                distance=distance, propagation_factor=propagation_factor, intensity_factor=intensity_factor
-            )
-            total_contribution += contribution
-
-    return total_contribution
+from calclation_helpers import calculate_value
 
 
 class Calculator:
@@ -38,9 +14,8 @@ class Calculator:
         self.intensity_factor = intensity_factor
 
     def get_output(self, input_points):
-        input_points_tuples = np.array(
-            [(input_point.x, input_point.y, input_point.z, input_point.height) for input_point in input_points]
-        )
+        input_points_tuples = self.__preprocess_input_points(input_points)
+
         output_matrix = self.__initialize_output_matrix()
         output_matrix = self.__calculate_outputs(
             output_matrix=output_matrix,
@@ -57,6 +32,16 @@ class Calculator:
 
     def __initialize_output_matrix(self):
         return np.zeros((self.x_range, self.y_range, self.z_range))
+
+    @staticmethod
+    def __preprocess_input_points(input_points):
+        input_points_processed = []
+        for input_point in input_points:
+            for h in range(input_point.height):
+                z = (input_point.z - input_point.height // 2) + h
+                input_points_processed.append((input_point.x, input_point.y, z))
+
+        return np.array(input_points_processed)
 
     @staticmethod
     @jit(nopython=False, parallel=True)
@@ -76,13 +61,7 @@ class Calculator:
     @staticmethod
     @jit(nopython=False, parallel=True)
     def __flatten_by_x(matrix):
-        flattened_output = []
-
-        for _ in range(matrix.shape[0]):
-            y_list = []
-            for _ in range(matrix.shape[2]):
-                y_list.append(0.0)
-            flattened_output.append(y_list)
+        flattened_output = np.zeros((matrix.shape[1], matrix.shape[2]))
 
         for y in prange(matrix.shape[1]):
             for z in prange(matrix.shape[2]):
@@ -97,13 +76,7 @@ class Calculator:
     @staticmethod
     @jit(nopython=False, parallel=True)
     def __flatten_by_y(matrix):
-        flattened_output = []
-
-        for _ in range(matrix.shape[0]):
-            y_list = []
-            for _ in range(matrix.shape[2]):
-                y_list.append(0.0)
-            flattened_output.append(y_list)
+        flattened_output = np.zeros((matrix.shape[0], matrix.shape[2]))
 
         for x in prange(matrix.shape[0]):
             for z in prange(matrix.shape[2]):
@@ -118,13 +91,7 @@ class Calculator:
     @staticmethod
     @jit(nopython=False, parallel=True)
     def __flatten_by_z(matrix):
-        flattened_output = []
-
-        for _ in range(matrix.shape[0]):
-            y_list = []
-            for _ in range(matrix.shape[1]):
-                y_list.append(0.0)
-            flattened_output.append(y_list)
+        flattened_output = np.zeros((matrix.shape[0], matrix.shape[1]))
 
         for x in prange(matrix.shape[0]):
             for y in prange(matrix.shape[1]):
