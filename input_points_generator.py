@@ -31,4 +31,8 @@ class HolesGenerator:
     def get_surface_diagonal_cross(step, x_range, y_range, z_range, height):
         z = z_range - height // 2
 
-        return [Hole(x=i, y=i, z=z, height=height) for i in range(0, min(x_range, y_range), step)]
+        main_diagonal = [Hole(x=i, y=i, z=z, height=height) for i in range(0, min(x_range, y_range), step)]
+        secondary_diagonal = [Hole(x=i, y=y_range - i, z=z, height=height) for i in range(0, min(x_range, y_range), step)]
+        print(main_diagonal)
+        print(secondary_diagonal)
+        return main_diagonal + secondary_diagonal
