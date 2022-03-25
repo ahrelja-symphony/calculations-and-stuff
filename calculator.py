@@ -13,8 +13,8 @@ class Calculator:
         self.propagation_factor = propagation_factor
         self.intensity_factor = intensity_factor
 
-    def get_output(self, input_points):
-        input_points_tuples = self.__preprocess_input_points(input_points)
+    def get_output(self, holes):
+        input_points_tuples = self.__preprocess_holes(holes)
 
         output_matrix = self.__initialize_output_matrix()
         output_matrix = self.__calculate_outputs(
@@ -34,9 +34,9 @@ class Calculator:
         return np.zeros((self.x_range, self.y_range, self.z_range))
 
     @staticmethod
-    def __preprocess_input_points(input_points):
+    def __preprocess_holes(holes):
         input_points_processed = []
-        for input_point in input_points:
+        for input_point in holes:
             for h in range(input_point.height):
                 z = (input_point.z - input_point.height // 2) + h
                 input_points_processed.append((input_point.x, input_point.y, z))
