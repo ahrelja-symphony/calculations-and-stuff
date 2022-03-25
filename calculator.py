@@ -2,7 +2,7 @@
 import numpy as np
 from numba import jit, prange
 
-from calclation_helpers import calculate_value
+from calculation_helpers import calculate_value
 
 
 class Calculator:
