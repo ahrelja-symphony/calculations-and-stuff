@@ -4,10 +4,10 @@ from calculator import Calculator
 from input_points_generator import HolesGenerator
 from plotting_helper import PlottingHelper
 
-X_RANGE = 50
-Y_RANGE = 50
-Z_RANGE = 50
-HEIGHT = 7
+X_RANGE = 40
+Y_RANGE = 40
+Z_RANGE = 40
+HEIGHT = 10
 PROPAGATION_FACTOR = 1.8
 INTENSITY_FACTOR = 10000
 
