@@ -3,3 +3,5 @@ matplotlib==3.5.1
 memory-profiler
 line-profiler
 filprofiler
+snakeviz
+snapshottest
