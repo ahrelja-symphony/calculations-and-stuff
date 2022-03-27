@@ -5,7 +5,7 @@ from numba import njit, prange
 import numpy as np
 
 
-@njit(nogil=True, fastmath=True)
+@njit
 def calculate_distance(current_point, input_point):
     res1 = (
         (current_point[0] - input_point[0]) * (current_point[0] - input_point[0])
@@ -16,12 +16,12 @@ def calculate_distance(current_point, input_point):
     return res2
 
 
-@njit(nogil=True, fastmath=True)
+@njit
 def calculate_contribution(distance, propagation_factor, intensity_factor):
     return intensity_factor / ((1 + distance) ** propagation_factor)
 
 
-@njit(nogil=True, fastmath=True)
+@njit
 def calculate_value(current_point, holes, propagation_factor, intensity_factor):
     total_contribution = 0
 

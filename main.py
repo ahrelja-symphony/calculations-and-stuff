@@ -1,6 +1,6 @@
 import time
 import numpy as np
-from calculator import Calculator
+from calculator import Calculator, calculate_value, calculate_distance
 from input_points_generator import HolesGenerator
 from plotting_helper import PlottingHelper
 
@@ -23,6 +23,10 @@ if __name__ == "__main__":
         propagation_factor=PROPAGATION_FACTOR,
         intensity_factor=INTENSITY_FACTOR,
     )
+
+
+
+
     print("Matrix size: " + str(X_RANGE * Y_RANGE * Z_RANGE))
     print("Number of holes: " + str(len(holes)))
     print("Height" + str(HEIGHT))
@@ -32,6 +36,9 @@ if __name__ == "__main__":
     output_x, output_y, output_z = calculator.get_output(holes=holes)
 
     print(f"Running time: {str(time.time() - start_time)}")
+
+    print(calculate_distance.inspect_types())
+
 
     # PlottingHelper.plot_input(input_points=holes, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
     # PlottingHelper.plot_ouputs(output_x, output_y, output_z)
