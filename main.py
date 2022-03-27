@@ -4,9 +4,9 @@ from calculator import Calculator, calculate_value, calculate_distance
 from input_points_generator import HolesGenerator
 from plotting_helper import PlottingHelper
 
-X_RANGE = 30
-Y_RANGE = 30
-Z_RANGE = 30
+X_RANGE = 150
+Y_RANGE = 150
+Z_RANGE = 150
 HEIGHT = 10
 PROPAGATION_FACTOR = 1.8
 INTENSITY_FACTOR = 10000.0
@@ -36,9 +36,6 @@ if __name__ == "__main__":
     output_x, output_y, output_z = calculator.get_output(holes=holes)
 
     print(f"Running time: {str(time.time() - start_time)}")
-
-    print(calculate_distance.inspect_types())
-
 
     # PlottingHelper.plot_input(input_points=holes, x_range=X_RANGE, y_range=Y_RANGE, z_range=Z_RANGE)
     # PlottingHelper.plot_ouputs(output_x, output_y, output_z)
