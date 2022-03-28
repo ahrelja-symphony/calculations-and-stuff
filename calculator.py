@@ -63,12 +63,14 @@ class Calculator:
     @staticmethod
     @njit(parallel=True)
     def __calculate_outputs(output_matrix, holes, propagation_factor, intensity_factor):
-        for x in prange(output_matrix.shape[0]):
-            for y in prange(output_matrix.shape[1]):
-                for z in prange(output_matrix.shape[2]):
-                    current_point = (x, y, z)
+        x_range = output_matrix.shape[0]
+        y_range = output_matrix.shape[1]
+        z_range = output_matrix.shape[2]
+        for x in prange(x_range):
+            for y in prange(y_range):
+                for z in prange(z_range):
                     output_matrix[x][y][z] = calculate_value(
-                        current_point=current_point,
+                        current_point=(x, y, z),
                         holes=holes,
                         propagation_factor=propagation_factor,
                         intensity_factor=intensity_factor,
@@ -79,7 +81,7 @@ class Calculator:
     @staticmethod
     @njit(parallel=True)
     def __flatten_by_x(matrix):
-        flattened_output = np.zeros((150, 150))
+        flattened_output = np.zeros((matrix.shape[1], matrix.shape[2]))
 
         for y in prange(matrix.shape[1]):
             for z in prange(matrix.shape[2]):
