@@ -1,6 +1,13 @@
 import random
+from dataclasses import dataclass
 
-from hole import Hole
+
+@dataclass
+class Hole:
+    x: int
+    y: int
+    z: int
+    height: float
 
 
 class HolesGenerator:

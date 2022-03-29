@@ -2,10 +2,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import AxesGrid
 from numpy import rot90, array
 
+DPI = 200
+
 
 class PlottingHelper:
     @staticmethod
-    def plot_input(input_points, x_range, y_range, z_range):
+    def plot_input(plot_name, input_points, x_range, y_range, z_range, show=False):
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
 
@@ -20,10 +22,14 @@ class PlottingHelper:
         ax.set_ylim([0, y_range])
         ax.set_zlim([0, z_range])
 
-        plt.show()
+        fig.savefig(f'./plots/{plot_name}.png', dpi=DPI,  bbox_inches='tight')
+        if show:
+            plt.show()
+        else:
+            plt.close(fig)
 
     @staticmethod
-    def plot_ouputs(output_x, output_y, output_z):
+    def plot_outputs(plot_name, output_x, output_y, output_z, show=False):
         data_x = rot90(array(output_x))
         data_y = rot90(array(output_y))
         data_z = rot90(array(output_z))
@@ -51,4 +57,8 @@ class PlottingHelper:
         for cax in grid.cbar_axes:
             cax.toggle_label(False)
 
-        plt.show()
+        fig.savefig(f'./plots/{plot_name}.png', dpi=DPI, bbox_inches='tight')
+        if show:
+            plt.show()
+        else:
+            plt.close(fig)

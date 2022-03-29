@@ -2,6 +2,7 @@ from numpy import sqrt
 
 
 class Calculator:
+
     def __init__(self, x_range, y_range, z_range, propagation_factor, intensity_factor):
         self.x_range = x_range
         self.y_range = y_range
