@@ -18,7 +18,7 @@ class HolesGenerator:
                 x=random.randint(0, x_range),
                 y=random.randint(0, y_range),
                 z=random.randint(0, z_range),
-                height=random.uniform(1, 10),
+                height=random.randint(1, 15),
             )
             for _ in range(number_of_points)
         ]
